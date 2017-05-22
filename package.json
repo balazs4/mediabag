@@ -1,0 +1,16 @@
+{
+  "name": "mediabag",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/balazs4/mediabag.git",
+  "author": "balazs4 <balazs4web@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "micro -p ${PORT} index.js"
+  },
+  "dependencies": {
+    "micro": "^7.3.3",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.4"
+  }
+}
