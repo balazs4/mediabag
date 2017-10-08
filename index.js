@@ -10,10 +10,10 @@ const streams = DB =>
     Object.keys(flat).map(x => Object.assign({}, flat[x], { id: x }))
   );
 
-const files = FOLDER =>
+const files = (FOLDER, SERVE) =>
   readdir(FOLDER).then(x =>
     x.map(fullpath => ({
-      url: fullpath,
+      url: fullpath.replace(FOLDER, SERVE),
       name: basename(fullpath),
       id: basename(fullpath),
       icon:
@@ -24,7 +24,7 @@ const files = FOLDER =>
 module.exports = async () => {
   const results = await Promise.all([
     streams(process.env.DB),
-    files(process.env.FOLDER)
+    files(process.env.FOLDER, process.env.SERVE)
   ]);
   return results.reduce((x, y) => x.concat(y), []);
 };
