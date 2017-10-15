@@ -1,6 +1,4 @@
 const request = require('request-promise-native');
-const readdir = require('recursive-readdir');
-
 const { basename, dirname } = require('path');
 
 const streams = DB =>
@@ -10,21 +8,21 @@ const streams = DB =>
     Object.keys(flat).map(x => Object.assign({}, flat[x], { id: x }))
   );
 
-const files = (FOLDER, SERVE) =>
-  readdir(FOLDER).then(x =>
-    x.map(fullpath => ({
-      url: fullpath.replace(FOLDER, SERVE),
-      name: basename(fullpath),
-      id: basename(fullpath),
+const files = SERVE =>
+  request(SERVE, { json: true }).then(files =>
+    files.map(file => ({
+      url: `${SERVE}${file}`,
+      name: basename(file),
+      id: basename(file),
+      tags: [basename(dirname(file))],
       icon:
-        'http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/file-video-icon.png',
-      tags: [basename(dirname(fullpath))]
+        'http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/file-video-icon.png'
     }))
   );
 module.exports = async () => {
   const results = await Promise.all([
     streams(process.env.DB),
-    files(process.env.FOLDER, process.env.SERVE)
+    files(process.env.SERVE)
   ]);
   return results.reduce((x, y) => x.concat(y), []);
 };
