@@ -31,14 +31,24 @@ module.exports = {
     //  }
     //},
     {
+      name: 'mediabag-client',
+      cwd: '/srv/mediabag-client/',
+      script: 'npm',
+      args: ['run', 'serve'],
+      env: {
+        PORT: 3333,
+        MEDIBAG: 'http://192.168.2.14:8080/mediabag/'
+      }
+    },
+    {
       name: 'mediabag',
       cwd: '/srv/mediabag/',
       script: 'npm',
       args: ['run', 'start'],
       env: {
         PORT: 9999,
-        DB: 'http://piserver:8080/mediabag/db',
-        SERVE: 'http://piserver:8080/mediabag/serve'
+        DB: 'http://192.168.2.14:8080/mediabag/db',
+        SERVE: 'http://192.168.2.14:8080/mediabag/serve'
       }
     },
     {

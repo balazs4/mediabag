@@ -21,8 +21,8 @@ const files = SERVE =>
   );
 module.exports = async () => {
   const results = await Promise.all([
-    streams(process.env.DB),
-    files(process.env.SERVE)
+    streams(process.env.DB)
+//    ,files(process.env.SERVE)
   ]);
   return results.reduce((x, y) => x.concat(y), []);
 };
